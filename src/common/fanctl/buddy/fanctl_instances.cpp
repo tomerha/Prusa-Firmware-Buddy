@@ -22,9 +22,10 @@ CFanCtlCommon &Fans::print(size_t index) {
 };
 
 CFanCtlCommon &Fans::heat_break(size_t index) {
-    static CFanCtl3Wire instance = CFanCtl3Wire(
+    static CFanCtl3WireWithStatePin instance = CFanCtl3WireWithStatePin(
         buddy::hw::fanHeatBreakPwm,
         buddy::hw::fanHeatBreakTach,
+        buddy::hw::fanEnclosureEnable,
         FANCTLHEATBREAK_PWM_MIN, FANCTLHEATBREAK_PWM_MAX,
         FANCTLHEATBREAK_RPM_MIN, FANCTLHEATBREAK_RPM_MAX,
         FANCTLHEATBREAK_PWM_THR,

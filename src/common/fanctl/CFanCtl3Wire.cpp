@@ -307,3 +307,20 @@ void CFanCtl3Wire::exitSelftestMode() {
 
     setPWM(pwm_to_restore);
 }
+
+//------------------------------------------------------------------------------
+// CFanCtl3WireWithStatePin implementation
+
+CFanCtl3WireWithStatePin::CFanCtl3WireWithStatePin(const buddy::hw::OutputPin &pinOut,
+    const buddy::hw::InputPin &pinTach, const buddy::hw::OutputPin &pinState, uint8_t minPWM,
+    uint8_t maxPWM, uint16_t minRPM, uint16_t maxRPM, uint8_t thrPWM, is_autofan_t autofan,
+    skip_tacho_t skip_tacho, uint8_t min_pwm_to_measure_rpm)
+    : CFanCtl3Wire(pinOut, pinTach, minPWM, maxPWM, minRPM, maxRPM, thrPWM, autofan, skip_tacho,
+        min_pwm_to_measure_rpm), m_state_pin(pinState) {}
+
+void CFanCtl3WireWithStatePin::tick() {
+    CFanCtl3Wire::tick();
+
+    Pin::State state = (getState() == FanState::running) ? Pin::State::high : Pin::State::low;
+    m_state_pin.write(state);
+}

@@ -153,7 +153,7 @@ void hw_gpio_init() {
     __HAL_RCC_GPIOH_CLK_ENABLE();
 
     // Configure GPIO pins : USB_OVERC_Pin ESP_GPIO0_Pin BED_MON_Pin WP1_Pin
-    GPIO_InitStruct.Pin = USB_OVERC_Pin | ESP_GPIO0_Pin | BED_MON_Pin | WP1_Pin;
+    GPIO_InitStruct.Pin = USB_OVERC_Pin | BED_MON_Pin | WP1_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);

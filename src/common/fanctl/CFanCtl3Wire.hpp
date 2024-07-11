@@ -169,3 +169,17 @@ protected:
     uint8_t selftest_initial_pwm;
     skip_tacho_t m_skip_tacho; // skip tacho measure
 };
+
+class CFanCtl3WireWithStatePin : public CFanCtl3Wire {
+public:
+    // constructor
+    CFanCtl3WireWithStatePin(const buddy::hw::OutputPin &pinOut, const buddy::hw::InputPin &pinTach,
+        const buddy::hw::OutputPin &pinState, uint8_t minPWM, uint8_t maxPWM, uint16_t minRPM,
+        uint16_t maxRPM, uint8_t thrPWM, is_autofan_t autofan, skip_tacho_t skip_tacho,
+        uint8_t min_pwm_to_measure_rpm);
+
+    virtual void tick() override; // tick callback from timer interrupt
+
+private:
+    const buddy::hw::OutputPin &m_state_pin;
+};
